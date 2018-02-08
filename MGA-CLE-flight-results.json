@@ -1,0 +1,26 @@
+[
+    {
+        "stops": "1 Stop",
+        "ticket price": "220.64",
+        "departure": "MGA, Managua",
+        "arrival": "CLE, Cleveland",
+        "flight duration": "0 days 15 hours 29 minutes",
+        "airline": "Spirit Airlines",
+        "plane": "AIRBUS INDUSTRIE A321 SHARKLETS",
+        "timings": [
+            {
+                "departure_airport": "Managua, Nicaragua (MGA-Augusto C. Sandino Intl.)",
+                "departure_time": "2:24am",
+                "arrival_airport": "Fort Lauderdale, FL (FLL-Fort Lauderdale - Hollywood Intl.)",
+                "arrival_time": "5:54am"
+            },
+            {
+                "departure_airport": "Fort Lauderdale, FL (FLL-Fort Lauderdale - Hollywood Intl.)",
+                "departure_time": "3:55pm",
+                "arrival_airport": "Cleveland, OH (CLE-Hopkins Intl.)",
+                "arrival_time": "6:53pm"
+            }
+        ],
+        "plane code": "32B"
+    }
+]
