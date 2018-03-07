@@ -1,8 +1,11 @@
 import scrapy
-
+import json
 
 class TalksSpider(scrapy.Spider):
     name = "talks"
+
+    def clean_text(self,text):
+        return text.strip('\t\r\n ').replace('\n', '').replace('\u2013', '')
 
     def start_requests(self):
         urls = [
@@ -14,15 +17,20 @@ class TalksSpider(scrapy.Spider):
 
     def parse(self, response):
         filename = 'USPyconTalks2018.html'
+        talks = response.selector.xpath('//h2')
+        data = []
+        for talk in talks:
+            info = {
+                'id': talk.xpath('a//@id').extract(),
+                'title': self.clean_text(talk.xpath('a//text()').extract()[0]),
+                'url': talk.root.base + talk.xpath('a//@href').extract()[0],
+                'speaker': self.clean_text(talk.xpath('following-sibling::p[1]//b[1]//text()')[0].extract()),
+                'schedule': self.clean_text(talk.xpath('following-sibling::p[1]//b[2]//text()')[0].extract()),
+                'description': self.clean_text(talk.xpath('following-sibling::div//text()')[0].extract()),
+            }
+            data.append(info)
+
         with open(filename, 'w') as f:
-            for talk in response.selector.xpath('//h2//a/text()').extract():
-                f.write('Title: %s' % talk.strip() + '\n')
-
-            for description in response.css('.presentation-description::text').extract():
-                f.write('Description: %s' % description.strip() + '\n')
-
-            for date_location in response.selector.xpath('//b/following-sibling::*//text()').extract():
-                    f.write('date_location: %s' % date_location.strip() + '\n')
-
-            for speaker in response.selector.xpath('//b[1]/text()').extract():
-                    f.write('speaker: %s' % speaker.strip() + '\n')
+            for line in data:
+                f.write(json.dumps(line))
+                f.write('\n')

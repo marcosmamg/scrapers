@@ -8,7 +8,11 @@
 import scrapy
 
 
-class PyconscrapperItem(scrapy.Item):
+class PyconTalks(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    id = scrapy.Field()
+    title = scrapy.Field()
+    url = scrapy.Field()
+    speaker = scrapy.Field()
+    schedule = scrapy.Field()
+    description = scrapy.Field()
